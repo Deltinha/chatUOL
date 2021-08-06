@@ -46,11 +46,7 @@ header ion-icon {
     color: #aaaaaa;
 }
 
-.inline-message__sender{
-    font-weight: 700 !important;
-}
-
-.inline-message__recipient{
+.inline-message__sender, .inline-message__recipient{
     font-weight: 700 !important;
 }
 
