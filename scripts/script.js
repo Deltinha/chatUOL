@@ -1,10 +1,10 @@
 
 
 let messagesElement = document.querySelector('.messages');
-let firstLoad = true;
 let userName;
+let firstLoad = true;
 
-askUsername()
+askUsername(true);
 verifyUsername();
 
 function askUsername(firstTry){
@@ -30,6 +30,7 @@ function verifyUsername(){
 function onLoginSuccess(value){
     console.log('sucesso');
     console.log(value.status);
+    setInterval(stayConnected,5000);
     retrieveMessages();
     setInterval(retrieveMessages,3000);
 }
@@ -39,6 +40,13 @@ function onLoginRejected(value){
     console.log(value.status);
     askUsername(false);
     verifyUsername();
+}
+
+function stayConnected(){
+    const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/uol/status',
+    {
+        name: userName
+    })
 }
 
 function retrieveMessages(){
@@ -92,6 +100,5 @@ function renderMessages(messages){
      scrollChat();
      firstLoad = false;
     }
-    console.log('renderizado');
 }
 
