@@ -2,9 +2,47 @@
 
 let messagesElement = document.querySelector('.messages');
 let firstLoad = true;
+let userName;
+
+askUsername()
+verifyUsername();
+
+function askUsername(firstTry){
+    if (firstTry) {
+        userName = prompt('Qual seu nome?');    
+    }
+    else{
+        userName = prompt('Este nome está sendo usado. Insira por favor um novo nome.');    
+    }
+    
+}
+
+function verifyUsername(){
+    const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/uol/participants',
+    {
+        name: userName
+    });
+    promise.then(onLoginSuccess);
+    promise.catch(onLoginRejected);
+    console.log('verifyUsername');
+}
+
+function onLoginSuccess(value){
+    console.log('sucesso');
+    console.log(value.status);
+    retrieveMessages();
+    setInterval(retrieveMessages,3000);
+}
+
+function onLoginRejected(value){
+    console.log('erro');
+    console.log(value.status);
+    askUsername(false);
+    verifyUsername();
+}
 
 function retrieveMessages(){
-    const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v3/uol/messages");
+    const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v3/uol/messages');
     promise.then(renderMessages);
 }
 
@@ -53,10 +91,7 @@ function renderMessages(messages){
     if (firstLoad) {
      scrollChat();
      firstLoad = false;
-    }      
+    }
+    console.log('renderizado');
 }
-
-
-retrieveMessages();
-setInterval(retrieveMessages,3000);
 
