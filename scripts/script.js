@@ -1,6 +1,7 @@
 
 
 let messagesElement = document.querySelector('.messages');
+let firstLoad = true;
 
 function retrieveMessages(){
     const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v3/uol/messages");
@@ -16,7 +17,6 @@ function renderMessages(messages){
     
     messagesElement.innerHTML = '';
 
-    console.log(messageList);
     for (let i = 0; i < messageList.length; i++) {
         if (messageList[i].type === 'status') {
             messagesElement.innerHTML += 
@@ -49,10 +49,14 @@ function renderMessages(messages){
             </li>`
         }  
     }
-    scrollChat();
+
+    if (firstLoad) {
+     scrollChat();
+     firstLoad = false;
+    }      
 }
 
 
-
-
 retrieveMessages();
+setInterval(retrieveMessages,3000);
+
