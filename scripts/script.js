@@ -7,6 +7,10 @@ function retrieveMessages(){
     promise.then(renderMessages);
 }
 
+function scrollChat(){
+    messagesElement.lastChild.scrollIntoView();
+}
+
 function renderMessages(messages){
     let messageList = messages.data;
     
@@ -45,6 +49,7 @@ function renderMessages(messages){
             </li>`
         }  
     }
+    scrollChat();
 }
 
 
