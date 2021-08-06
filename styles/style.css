@@ -27,12 +27,43 @@ header ion-icon {
 }
 
 .messages {
-    height: 1000px;
     margin-top: 80px;
     margin-bottom: 80px;
     box-sizing: border-box;
     padding-top: 26px;
-    
+    line-height: 20px;  
+    font-size: 14px;
+}
+
+.inline-message{
+    margin-bottom: 4px;
+    box-sizing: border-box;
+    padding: 10px 8px;
+    font-weight: 400;
+}
+
+.inline-message__timestamp{
+    color: #aaaaaa;
+}
+
+.inline-message__sender{
+    font-weight: 700 !important;
+}
+
+.inline-message__recipient{
+    font-weight: 700 !important;
+}
+
+.status{
+    background-color: #dcdcdc;
+}
+
+.public-message{
+    background-color: white;
+}
+
+.private-message{
+    background-color: #ffdede;
 }
 
 .input-area {
@@ -59,7 +90,6 @@ header ion-icon {
     outline: none;
     
 }
-
 
 .input-area .send-message-button {
     font-size: 26px;
