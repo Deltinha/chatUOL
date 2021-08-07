@@ -3,6 +3,7 @@
 let messagesElement = document.querySelector('.container-messages');
 let userName;
 let firstLoad = true;
+let stayConnectedIntervalID;
 
 askUsername(true);
 verifyUsername();
@@ -24,20 +25,15 @@ function verifyUsername(){
     });
     promise.then(onLoginSuccess);
     promise.catch(onLoginRejected);
-    console.log('verifyUsername');
 }
 
 function onLoginSuccess(value){
-    console.log('sucesso');
-    console.log(value.status);
-    setInterval(stayConnected,5000);
+    stayConnectedIntervalID = setInterval(stayConnected,5000);
     retrieveMessages();
     setInterval(retrieveMessages,3000);
 }
 
 function onLoginRejected(value){
-    console.log('erro');
-    console.log(value.status);
     askUsername(false);
     verifyUsername();
 }
@@ -102,3 +98,32 @@ function renderMessages(messages){
     }
 }
 
+function getMessageInput(){
+    return {
+        from: userName,
+	    to: 'Todos',
+	    text: document.querySelector('.container-send-message input').value,
+	    type: "message"
+    }
+};
+
+
+
+function sendMessage(){
+   const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/uol/messages', getMessageInput());
+   promise.then(msgEnviada);
+   promise.catch(msgErro);
+}
+
+function msgEnviada(){
+    retrieveMessages();
+}
+
+function msgErro() { //Execute disconnect() into console to test this condition
+    alert('Você não está mais online. Atualize a página...');
+    window.location.reload();    
+}
+
+function disconnect(){
+    clearInterval(stayConnectedIntervalID);
+}
