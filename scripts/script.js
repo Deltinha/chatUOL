@@ -5,8 +5,8 @@ let userName;
 let firstLoad = true;
 let stayConnectedIntervalID;
 
-askUsername(true);
-verifyUsername();
+//askUsername(true);
+//verifyUsername();
 
 function askUsername(firstTry){
     if (firstTry) {

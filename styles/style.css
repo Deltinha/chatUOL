@@ -1,8 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-body {
+.chat-screen{
     background-color: #f3f3f3;
     font-family: 'Roboto', sans-serif;
+}
+
+.hidden{
+    display: none !important;
 }
 
 header {
