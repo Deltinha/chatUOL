@@ -1,6 +1,6 @@
 
 
-let messagesElement = document.querySelector('.messages');
+let messagesElement = document.querySelector('.container-messages');
 let userName;
 let firstLoad = true;
 
