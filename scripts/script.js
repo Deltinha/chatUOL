@@ -79,7 +79,7 @@ function renderMessages(messages){
                 <span>${messageList[i].text}</span>
             </li>`
         }
-        else if (messageList[i].type === 'private') {
+        else if (messageList[i].type === 'private_message' && (messageList[i].to === userName || messageList[i].from === userName)) {
             messagesElement.innerHTML +=
             `<li class="inline-message private-message">
                 <span class="inline-message__timestamp">(${messageList[i].time})</span>
@@ -111,15 +111,16 @@ function getMessageInput(){
 
 function sendMessage(){
    const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/uol/messages', getMessageInput());
-   promise.then(msgEnviada);
-   promise.catch(msgErro);
+   promise.then(sendSuccess);
+   promise.catch(sendRejected);
 }
 
-function msgEnviada(){
+function sendSuccess(value){
+    console.log(value);
     retrieveMessages();
 }
 
-function msgErro() { //Execute disconnect() into console to test this condition
+function sendRejected() { //Execute disconnect() into console to test this condition
     alert('Você não está mais online. Atualize a página...');
     window.location.reload();    
 }
