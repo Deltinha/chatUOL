@@ -9,16 +9,16 @@
     <link rel="stylesheet" href="styles/reset.css">
     <link rel="stylesheet" href="styles/chat-style.css">
     <link rel="stylesheet" href="styles/login-style.css">
-    <link rel="stylesheet" href="styles/loading.css">
+    <link rel="stylesheet" href="styles/loader.css">
 </head>
 <body>
     <div class="login-screen">
         <img src="assets/logo.png" alt="" class="login-screen__logo">
         <div class="login-screen__input">
             <input type="text" placeholder="Digite seu nome">
-            <button>Entrar</button>
+            <button onclick="getUsername()">Entrar</button>
         </div>
-        <div class="login-screen__loading hidden">
+        <div class="login-screen__loader hidden">
             <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
             <span>Entrando...</span>
         </div>

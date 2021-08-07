@@ -5,17 +5,20 @@ let userName;
 let firstLoad = true;
 let stayConnectedIntervalID;
 
-//askUsername(true);
-//verifyUsername();
+function showLoader(){
+    document.querySelector('.login-screen__input').classList.add('hidden');
+    document.querySelector('.login-screen__loader').classList.remove('hidden');
+}
 
-function askUsername(firstTry){
-    if (firstTry) {
-        userName = prompt('Qual seu nome?');    
-    }
-    else{
-        userName = prompt('Este nome está sendo usado. Insira por favor um novo nome.');    
-    }
-    
+function hideLoader(){
+    document.querySelector('.login-screen__input').classList.remove('hidden');
+    document.querySelector('.login-screen__loader').classList.add('hidden');
+}
+
+function getUsername(){
+    userName = document.querySelector('.login-screen__input input').value;
+    showLoader();
+    verifyUsername();
 }
 
 function verifyUsername(){
@@ -27,15 +30,21 @@ function verifyUsername(){
     promise.catch(onLoginRejected);
 }
 
+function showChatScreen(){
+    document.querySelector('.login-screen').classList.add('hidden');
+    document.querySelector('.chat-screen').classList.remove('hidden');
+}
+
 function onLoginSuccess(value){
+    showChatScreen();
     stayConnectedIntervalID = setInterval(stayConnected,5000);
     retrieveMessages();
     setInterval(retrieveMessages,3000);
 }
 
 function onLoginRejected(value){
-    askUsername(false);
-    verifyUsername();
+    hideLoader();
+    alert('Este nome já está em uso. Insira outro.')
 }
 
 function stayConnected(){
@@ -107,8 +116,6 @@ function getMessageInput(){
     }
 };
 
-
-
 function sendMessage(){
    const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/uol/messages', getMessageInput());
    promise.then(sendSuccess);
@@ -117,10 +124,11 @@ function sendMessage(){
 
 function sendSuccess(value){
     retrieveMessages();
+    scrollChat();
 }
 
-function sendRejected() { //Execute disconnect() into console to test this condition
-    alert('Você não está mais online. Atualize a página...');
+function sendRejected() { 
+    alert('Você não está mais online. Atualize a página...'); //To test this condition, execute disconnect() into console.
     window.location.reload();    
 }
 
