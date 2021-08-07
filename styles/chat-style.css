@@ -70,7 +70,7 @@ header ion-icon {
     background-color: #ffdede;
 }
 
-.container-send-message {
+.form-send-message {
     width: 100%;
     height: 80px;
     box-sizing: border-box;
@@ -85,7 +85,7 @@ header ion-icon {
     background-color: white;
 }
 
-.container-send-message input {
+.form-send-message input {
     width: 100%;
     height: 70px;
     border: none;
@@ -95,7 +95,7 @@ header ion-icon {
     
 }
 
-.container-send-message .send-message-button {
+.form-send-message .send-message-button {
     font-size: 26px;
     margin-left: 17px;
 }

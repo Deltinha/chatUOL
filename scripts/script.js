@@ -102,9 +102,10 @@ function renderMessages(messages){
         }  
     }
 
-    // if (isFirstRender || isUserSendingMessage) { //Scrolls only on first render or if user sends a message.
-    //  scrollChat();
-    //  isFirstRender = false;
+    if (isFirstRender){
+      scrollChat();
+      isFirstRender = false;
+    }
     }
 
 function getMessageInput(){
