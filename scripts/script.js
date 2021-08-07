@@ -74,7 +74,7 @@ function renderMessages(messages){
                 <span class="inline-message__timestamp">(${messageList[i].time})</span>
                 <span class="inline-message__sender">${messageList[i].from}</span>
                 para
-                <span class="inline-message__recipient">${messageList[i].to}</span>
+                <span class="inline-message__receiver">${messageList[i].to}</span>
                 :
                 <span>${messageList[i].text}</span>
             </li>`
@@ -85,7 +85,7 @@ function renderMessages(messages){
                 <span class="inline-message__timestamp">(${messageList[i].time})</span>
                 <span class="inline-message__sender">${messageList[i].from}</span>
                 preservadamente para
-                <span class="inline-message__recipient">${messageList[i].to}</span>
+                <span class="inline-message__receiver">${messageList[i].to}</span>
                 :
                 <span>${messageList[i].text}</span>
             </li>`
@@ -116,7 +116,6 @@ function sendMessage(){
 }
 
 function sendSuccess(value){
-    console.log(value);
     retrieveMessages();
 }
 
