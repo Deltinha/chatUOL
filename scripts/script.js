@@ -102,9 +102,13 @@ function renderMessages(messages){
         }  
     }
 
-    if (isFirstRender){
-      scrollChat();
-      isFirstRender = false;
+    if (isFirstRender){  //Scroll only on first render
+        scrollChat();
+        isFirstRender = false;
+    }
+    if (isUserSendingMessage){  //Scroll chat if user just sent a message
+        scrollChat();
+        isUserSendingMessage = false;
     }
     }
 
