@@ -14,10 +14,10 @@
 <body>
     <div class="login-screen">
         <img src="assets/logo.png" alt="" class="login-screen__logo">
-        <div class="login-screen__input">
+        <form onsubmit="getUsername(); return false;" class="login-screen__form">
             <input type="text" placeholder="Digite seu nome">
-            <button onclick="getUsername()">Entrar</button>
-        </div>
+            <button type="submit">Entrar</button>
+        </form>
         <div class="login-screen__loader hidden">
             <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
             <span>Entrando...</span>
@@ -34,10 +34,12 @@
 
        </ul>
 
-       <div class="container-send-message">
+       <form onsubmit="sendMessage(); return false;" class="container-send-message">
            <input type="text" placeholder="Escreva aqui...">
-           <ion-icon onclick="sendMessage();" class="send-message-button" name="paper-plane-outline"></ion-icon>
-       </div>
+           <button type="submit">
+               <ion-icon class="send-message-button" name="paper-plane-outline"></ion-icon>
+           </button>
+       </form>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

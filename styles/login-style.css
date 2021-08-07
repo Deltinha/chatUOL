@@ -16,7 +16,7 @@
     transform: translateX(-50%);
 }
 
-.login-screen__input,
+.login-screen__form,
 .login-screen__loader{
     display: flex;
     flex-direction: column;
@@ -27,7 +27,7 @@
     transform: translate(-50%,-50%);
 }
 
-.login-screen__input input{
+.login-screen__form input{
     height: 54px;
     width: 261px;
     margin-bottom: 15px;
@@ -41,7 +41,7 @@
 
 }
 
-.login-screen__input button{
+.login-screen__form button{
     height: 45px;
     width: 109px;
     border-radius: 9px;

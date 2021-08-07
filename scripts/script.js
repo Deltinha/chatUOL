@@ -2,21 +2,22 @@
 
 let messagesElement = document.querySelector('.container-messages');
 let userName;
-let firstLoad = true;
+let isFirstRender = true;
+let isUserSendingMessage = false;
 let stayConnectedIntervalID;
 
 function showLoader(){
-    document.querySelector('.login-screen__input').classList.add('hidden');
+    document.querySelector('.login-screen__form').classList.add('hidden');
     document.querySelector('.login-screen__loader').classList.remove('hidden');
 }
 
 function hideLoader(){
-    document.querySelector('.login-screen__input').classList.remove('hidden');
+    document.querySelector('.login-screen__form').classList.remove('hidden');
     document.querySelector('.login-screen__loader').classList.add('hidden');
 }
 
 function getUsername(){
-    userName = document.querySelector('.login-screen__input input').value;
+    userName = document.querySelector('.login-screen__form input').value;
     showLoader();
     verifyUsername();
 }
@@ -59,7 +60,7 @@ function retrieveMessages(){
     promise.then(renderMessages);
 }
 
-function scrollChat(){
+function scrollChat(){ //Scrolls chat to last message
     messagesElement.lastChild.scrollIntoView();
 }
 
@@ -101,11 +102,10 @@ function renderMessages(messages){
         }  
     }
 
-    if (firstLoad) {
-     scrollChat();
-     firstLoad = false;
+    // if (isFirstRender || isUserSendingMessage) { //Scrolls only on first render or if user sends a message.
+    //  scrollChat();
+    //  isFirstRender = false;
     }
-}
 
 function getMessageInput(){
     return {
@@ -123,8 +123,9 @@ function sendMessage(){
 }
 
 function sendSuccess(value){
+    isUserSendingMessage = true;
     retrieveMessages();
-    scrollChat();
+    
 }
 
 function sendRejected() { 
