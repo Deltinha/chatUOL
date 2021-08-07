@@ -112,7 +112,7 @@ function getMessageInput(){
     return {
         from: userName,
 	    to: 'Todos',
-	    text: document.querySelector('.container-send-message input').value,
+	    text: document.querySelector('.form-send-message input').value,
 	    type: "message"
     }
 };
