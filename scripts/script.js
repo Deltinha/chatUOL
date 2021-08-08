@@ -157,7 +157,8 @@ function disconnect(){
 }
 
 function toggleParticipantsMenu(){
-    document.querySelector('.participants').classList.toggle('hidden');
+    document.querySelector('.participants__menu').classList.toggle('hidden');
+    document.querySelector('.participants__black-overlay').classList.toggle('hidden');
 }
 
 function retrieveParticipants(){
