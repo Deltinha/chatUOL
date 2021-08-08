@@ -1,8 +1,9 @@
-let messagesElement = document.querySelector('.container-messages');
+//let messagesElement = document.querySelector('.container-messages');
 let userName;
 let isFirstRender = true;
 let isUserSendingMessage = false;
 let stayConnectedIntervalID;
+let lastCheckedAddressee = 'Todos';
 
 function showLoader(){
     document.querySelector('.login-screen__form').classList.add('hidden');
@@ -39,6 +40,8 @@ function onLoginSuccess(value){
     stayConnectedIntervalID = setInterval(stayConnected,5000);
     retrieveMessages();
     setInterval(retrieveMessages,3000);
+    retrieveParticipants();
+    setInterval(retrieveParticipants,10000);
 }
 
 function onLoginRejected(value){
@@ -58,12 +61,13 @@ function retrieveMessages(){
     promise.then(renderMessages);
 }
 
-function scrollChat(){ //Scrolls chat to last message
+function scrollChat(messagesElement){ //Scrolls chat to last message
     messagesElement.lastChild.scrollIntoView();
 }
 
 function renderMessages(messages){
     
+    let messagesElement = document.querySelector('.container-messages');
     messagesElement.innerHTML = '';
 
     for (let i = 0; i < messages.data.length; i++) {
@@ -95,7 +99,7 @@ function renderMessages(messages){
             `<li class="inline-message private-message">
                 <span class="inline-message__timestamp">(${messages.data[i].time})</span>
                 <span class="inline-message__sender">${messages.data[i].from}</span>
-                preservadamente para
+                reservadamente para
                 <span class="inline-message__receiver">${messages.data[i].to}</span>
                 :
                 <span>${messages.data[i].text}</span>
@@ -104,17 +108,18 @@ function renderMessages(messages){
     }
 
     if (isFirstRender){  //Scroll only on first render
-        scrollChat();
+        scrollChat(messagesElement);
         isFirstRender = false;
     }
     if (isUserSendingMessage){  //Scroll chat if user just sent a message
-        scrollChat();
+        scrollChat(messagesElement);
         isUserSendingMessage = false;
     }
 }
 
 function getAddressee(){
-    return document.querySelector('.participants__menu__send-to input:checked').value;
+    lastCheckedAddressee = document.querySelector('.participants__menu__send-to input:checked').value;
+    return lastCheckedAddressee;
 }
 
 function getMessageType(){
@@ -129,8 +134,8 @@ function sendMessage(){
    const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/uol/messages',
    {
         from: userName,
-        to: getAddressee(),
-        text: getMessageInput(),
+        to: lastCheckedAddressee,    //To preserve the checked addressee after an update on participants list 
+        text: getMessageInput(),  //I had to use lastCheckedAddressee instead of calling getAddressee().
         type: getMessageType()
    });
    promise.then(sendSuccess);
@@ -140,7 +145,6 @@ function sendMessage(){
 function sendSuccess(value){
     isUserSendingMessage = true;
     retrieveMessages();
-    
 }
 
 function sendRejected() { 
@@ -154,4 +158,64 @@ function disconnect(){
 
 function toggleParticipantsMenu(){
     document.querySelector('.participants').classList.toggle('hidden');
+}
+
+function retrieveParticipants(){
+    const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v3/uol/participants');
+    promise.then(renderParticipants);
+}
+
+function renderParticipants(participants){
+    let participantsElement = document.querySelector('.participants__menu__send-to');
+    participantsElement.innerHTML = 
+    `
+        <div>
+            <input onclick="getAddressee();" type="radio" name="send-to" id="everyone" value="Todos" class="hidden" ${autoCheckAddressee('everyone')}>
+                <label for="everyone">
+                    <ion-icon name="people-circle"></ion-icon>    
+                    <span>Todos</span>
+                </label>
+            </input>
+        </div>
+    `;
+
+    for (let i = 0; i < participants.data.length; i++) {
+        
+
+        participantsElement.innerHTML +=
+        `
+            <div>
+                <input onclick="getAddressee();" type="radio" name="send-to" id='${participants.data[i].name}' value='${participants.data[i].name}' class="hidden" ${autoCheckAddressee(participants.data[i].name)}>
+                    <label for='${participants.data[i].name}'>
+                        <ion-icon name="person-circle"></ion-icon>
+                        <span>${participants.data[i].name}</span>
+                    </label>
+                </input>
+            </div>
+        `
+        
+    }
+}
+
+function autoCheckAddressee(checkTarget){
+    if (checkTarget === 'everyone') {
+        if (lastCheckedAddressee === 'Todos') {
+            return 'checked';
+        }
+        else{
+            return;
+        } 
+    }
+    else {
+        if (checkTarget === 'Todos') {  //Do not auto check if the target is a participant called Todos
+            return
+        }
+        else if (checkTarget === lastCheckedAddressee) {
+            return 'checked';
+        }
+        else{
+            return;
+        }
+    }
+    
 }
