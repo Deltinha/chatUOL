@@ -146,7 +146,7 @@ header ion-icon {
   
 .participants__menu label:after {
     content: "\2713";
-    color: green;
+    color: #28bb25;
     display: inline-block;
     transform: scale(0);
 }

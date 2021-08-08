@@ -1,6 +1,5 @@
 let messagesElement = document.querySelector('.container-messages');
 let userName;
-let addressee = 'Todos'
 let isFirstRender = true;
 let isUserSendingMessage = false;
 let stayConnectedIntervalID;
@@ -114,12 +113,20 @@ function renderMessages(messages){
     }
 }
 
+function getAddressee(){
+    return document.querySelector('.participants__menu__send-to input:checked').value;
+}
+
+function getMessageType(){
+    return document.querySelector('.participants__menu__visibility input:checked').value;
+}
+
 function getMessageInput(){
     return {
         from: userName,
-	    to: 'Todos',
+	    to: getAddressee(),
 	    text: document.querySelector('.form-send-message input').value,
-	    type: "message"
+	    type: getMessageType()
     }
 };
 
