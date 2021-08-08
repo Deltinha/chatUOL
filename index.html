@@ -24,10 +24,10 @@
         </div>
     </div>
 
-    <div class="chat-screen hidden">
+    <div class="chat-room hidden">
        <header>
             <img class=header-logo src="assets/logo.png" alt="">
-           <ion-icon name="people"></ion-icon>
+           <ion-icon onclick="toggleParticipantsMenu();" name="people"></ion-icon>
        </header>
 
        <ul class="container-messages">
@@ -41,6 +41,59 @@
            </button>
        </form>
     </div>
+
+    <div class="participants hidden">
+        <div onclick="toggleParticipantsMenu();" class="participants__black-overlay"></div>
+        <div class="participants__menu">
+            <span>Escolha um contato para enviar mensagem:</span>
+                <radiogroup class="participants__menu__send-to">
+                  <div>
+                    <input type="radio" name="send-to" id="everyone" value="Todos" class="hidden" checked>
+                    <label for="everyone">
+                        <ion-icon name="people-circle"></ion-icon>    
+                        <span>Todos</span>
+                    </label>
+                    </input>
+                  </div>
+                  <div>
+                    <input type="radio" name="send-to" id="Joao" value="Joao" class="hidden">
+                    <label for="Joao">
+                        <ion-icon name="person-circle"></ion-icon>
+                        <span>João</span>
+                    </label>
+                    </input>
+                  </div>
+                  <div>
+                    <input type="radio" name="send-to" id="Maria" value="Maria" class="hidden">
+                    <label for="Maria">
+                        <ion-icon name="person-circle"></ion-icon>
+                        <span>Maria</span>
+                    </label>
+                    </input>
+                  </div>
+                </radiogroup>
+            <span>Escolha a visibilidade</span>
+            <radiogroup class="participants__menu__visibility">
+                <div>
+                  <input type="radio" name="visibility" id="public" value="message" class="hidden" checked>
+                  <label for="public">
+                      <ion-icon name="lock-open"></ion-icon>    
+                      <span>Público</span>
+                  </label>
+                  </input>
+                </div>
+                <div>
+                  <input type="radio" name="visibility" id="private" value="private_message" class="hidden" >
+                  <label for="private">
+                      <ion-icon name="lock-closed"></ion-icon>
+                      <span>Reservadamente</span>
+                  </label>
+                  </input>
+                </div>
+              </radiogroup>
+        </div>
+    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

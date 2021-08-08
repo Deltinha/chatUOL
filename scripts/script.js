@@ -1,7 +1,6 @@
-
-
 let messagesElement = document.querySelector('.container-messages');
 let userName;
+let addressee = 'Todos'
 let isFirstRender = true;
 let isUserSendingMessage = false;
 let stayConnectedIntervalID;
@@ -33,7 +32,7 @@ function verifyUsername(){
 
 function showChatScreen(){
     document.querySelector('.login-screen').classList.add('hidden');
-    document.querySelector('.chat-screen').classList.remove('hidden');
+    document.querySelector('.chat-room').classList.remove('hidden');
 }
 
 function onLoginSuccess(value){
@@ -65,39 +64,42 @@ function scrollChat(){ //Scrolls chat to last message
 }
 
 function renderMessages(messages){
-    let messageList = messages.data;
     
     messagesElement.innerHTML = '';
 
-    for (let i = 0; i < messageList.length; i++) {
-        if (messageList[i].type === 'status') {
+    for (let i = 0; i < messages.data.length; i++) {
+
+        if (messages.data[i].type === 'status') {
+
             messagesElement.innerHTML += 
             `<li class="inline-message status">
-                <span class="inline-message__timestamp">(${messageList[i].time})</span>
-                <span class="inline-message__sender">${messageList[i].from}
-                </span>${messageList[i].text}
+                <span class="inline-message__timestamp">(${messages.data[i].time})</span>
+                <span class="inline-message__sender">${messages.data[i].from}
+                </span>${messages.data[i].text}
             </li>`
         }
-        else if(messageList[i].type === 'message'){
+        else if(messages.data[i].type === 'message'){
+
             messagesElement.innerHTML += 
             `<li class="inline-message public-message">
-                <span class="inline-message__timestamp">(${messageList[i].time})</span>
-                <span class="inline-message__sender">${messageList[i].from}</span>
+                <span class="inline-message__timestamp">(${messages.data[i].time})</span>
+                <span class="inline-message__sender">${messages.data[i].from}</span>
                 para
-                <span class="inline-message__receiver">${messageList[i].to}</span>
+                <span class="inline-message__receiver">${messages.data[i].to}</span>
                 :
-                <span>${messageList[i].text}</span>
+                <span>${messages.data[i].text}</span>
             </li>`
         }
-        else if (messageList[i].type === 'private_message' && (messageList[i].to === userName || messageList[i].from === userName)) {
+        else if (messages.data[i].type === 'private_message' && (messages.data[i].to === userName || messages.data[i].from === userName)) {
+            
             messagesElement.innerHTML +=
             `<li class="inline-message private-message">
-                <span class="inline-message__timestamp">(${messageList[i].time})</span>
-                <span class="inline-message__sender">${messageList[i].from}</span>
+                <span class="inline-message__timestamp">(${messages.data[i].time})</span>
+                <span class="inline-message__sender">${messages.data[i].from}</span>
                 preservadamente para
-                <span class="inline-message__receiver">${messageList[i].to}</span>
+                <span class="inline-message__receiver">${messages.data[i].to}</span>
                 :
-                <span>${messageList[i].text}</span>
+                <span>${messages.data[i].text}</span>
             </li>`
         }  
     }
@@ -110,7 +112,7 @@ function renderMessages(messages){
         scrollChat();
         isUserSendingMessage = false;
     }
-    }
+}
 
 function getMessageInput(){
     return {
@@ -140,4 +142,8 @@ function sendRejected() {
 
 function disconnect(){
     clearInterval(stayConnectedIntervalID);
+}
+
+function toggleParticipantsMenu(){
+    document.querySelector('.participants').classList.toggle('hidden');
 }
