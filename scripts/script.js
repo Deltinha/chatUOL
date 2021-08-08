@@ -122,16 +122,17 @@ function getMessageType(){
 }
 
 function getMessageInput(){
-    return {
-        from: userName,
-	    to: getAddressee(),
-	    text: document.querySelector('.form-send-message input').value,
-	    type: getMessageType()
-    }
-};
+    return document.querySelector('.form-send-message input').value;
+}
 
 function sendMessage(){
-   const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/uol/messages', getMessageInput());
+   const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/uol/messages',
+   {
+        from: userName,
+        to: getAddressee(),
+        text: getMessageInput(),
+        type: getMessageType()
+   });
    promise.then(sendSuccess);
    promise.catch(sendRejected);
 }
