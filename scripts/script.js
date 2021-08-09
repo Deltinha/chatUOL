@@ -1,9 +1,10 @@
-//let messagesElement = document.querySelector('.container-messages');
+let messagesElement = document.querySelector('.container-messages');
 let userName;
 let isFirstRender = true;
 let isUserSendingMessage = false;
 let stayConnectedIntervalID;
 let lastCheckedAddressee = 'Todos';
+let sendMessageLabel = document.querySelector('.form-send-message div label');
 
 function showLoader(){
     document.querySelector('.login-screen__form').classList.add('hidden');
@@ -61,7 +62,7 @@ function retrieveMessages(){
     promise.then(renderMessages);
 }
 
-function scrollChat(messagesElement){ //Scrolls chat to last message
+function scrollChat(){ //Scrolls chat to last message
     messagesElement.lastChild.scrollIntoView();
 }
 
@@ -108,11 +109,11 @@ function renderMessages(messages){
     }
 
     if (isFirstRender){  //Scroll only on first render
-        scrollChat(messagesElement);
+        scrollChat();
         isFirstRender = false;
     }
     if (isUserSendingMessage){  //Scroll chat if user just sent a message
-        scrollChat(messagesElement);
+        scrollChat();
         isUserSendingMessage = false;
     }
 }
@@ -128,6 +129,15 @@ function getMessageType(){
 
 function getMessageInput(){
     return document.querySelector('.form-send-message input').value;
+}
+
+function filterMessageInput(){
+    if (getMessageInput() === '') {
+        return
+    }
+    else {
+        sendMessage();
+    }
 }
 
 function sendMessage(){
@@ -156,9 +166,11 @@ function disconnect(){
     clearInterval(stayConnectedIntervalID);
 }
 
-function toggleParticipantsMenu(){
+function toggleParticipantsMenu(callingElement){
+    toggleChatScroll(callingElement);
     document.querySelector('.participants__menu').classList.toggle('hidden');
     document.querySelector('.participants__black-overlay').classList.toggle('hidden');
+    updateSendMessageLabel();
 }
 
 function retrieveParticipants(){
@@ -219,4 +231,31 @@ function autoCheckAddressee(checkTarget){
         }
     }
     
+}
+
+function updateSendMessageLabel(){
+    if (lastCheckedAddressee === 'Todos') {
+        sendMessageLabel.innerHTML = '';
+        sendMessageLabel.parentNode.setAttribute('style','justify-content: center;')
+    }
+    else{
+        sendMessageLabel.parentNode.setAttribute('style','justify-content: space-between;')
+        sendMessageLabel.innerHTML =
+    `
+        Enviando para ${lastCheckedAddressee}
+    `
+    if (getMessageType() === 'private_message') {
+        sendMessageLabel.innerHTML += '(reservadamente)';
+    }
+    }
+}
+
+function toggleChatScroll(callingElement){
+    if (callingElement.id === 'participants-icon') {
+        messagesElement.setAttribute('style','overflow-y: hidden; height: calc(100vh - 160px);');
+    }
+    if (callingElement.id === 'black-overlay') {
+        messagesElement.removeAttribute('style');
+        scrollChat();
+    }
 }

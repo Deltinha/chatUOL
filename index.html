@@ -6,10 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+    </style> 
+
     <link rel="stylesheet" href="styles/reset.css">
     <link rel="stylesheet" href="styles/chat-style.css">
     <link rel="stylesheet" href="styles/login-style.css">
     <link rel="stylesheet" href="styles/loader.css">
+
+
 </head>
 <body>
     <div class="login-screen">
@@ -27,23 +33,27 @@
     <div class="chat-room hidden">
        <header>
             <img class=header-logo src="assets/logo.png" alt="">
-           <ion-icon onclick="toggleParticipantsMenu();" name="people"></ion-icon>
+            
+           <ion-icon onclick="toggleParticipantsMenu(this);" name="people" id="participants-icon"></ion-icon>
        </header>
 
        <ul class="container-messages">
 
        </ul>
 
-       <form onsubmit="sendMessage(); return false;" class="form-send-message">
-           <input type="text" placeholder="Escreva aqui...">
-           <button type="submit">
-               <ion-icon class="send-message-button" name="paper-plane-outline"></ion-icon>
-           </button>
+       <form onsubmit="filterMessageInput(); return false;" class="form-send-message">
+            <div>
+                <input type="text" placeholder="Escreva aqui...">
+                <label for=""></label>
+            </div>
+            <button type="submit">
+               <ion-icon name="paper-plane-outline"></ion-icon>
+            </button>
        </form>
     </div>
 
     <div class="participants">
-        <div onclick="toggleParticipantsMenu();" class="participants__black-overlay hidden"></div>
+        <div onclick="toggleParticipantsMenu(this);" class="participants__black-overlay hidden" id="black-overlay"></div>
         <div class="participants__menu hidden">
             <span>Escolha um contato para enviar mensagem:</span>
                 <radiogroup class="participants__menu__send-to">
