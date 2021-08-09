@@ -90,6 +90,8 @@ header ion-icon {
 
 .form-send-message > div {
     height: 100%;
+    width: 100%;
+    padding-right: 17px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -110,6 +112,8 @@ header ion-icon {
     opacity: 1;
     font-size: 18;
     font-style: italic;
+    background-color: blue;
+    
 
 }
 
