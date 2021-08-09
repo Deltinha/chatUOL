@@ -23,7 +23,6 @@ header {
     left: 0;
     z-index: 1;
     background-color: white;
-
 }
 
 .header-logo{
@@ -40,7 +39,6 @@ header ion-icon {
     box-sizing: border-box;
     padding-top: 26px;
     font-size: 14px;
-    
 }
 
 .inline-message{
@@ -95,7 +93,6 @@ header ion-icon {
     display: flex;
     flex-direction: column;
     justify-content: center;
-
 }
 
 .form-send-message input{
